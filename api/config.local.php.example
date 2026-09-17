@@ -2,13 +2,22 @@
 // SETUP (one-time, manual — do this directly on the Hostinger server):
 //
 // 1. Copy this file to "config.local.php" in this same folder.
-// 2. Replace the placeholder below with your real Resend API key.
-// 3. Upload ONLY config.local.php to Hostinger (File Manager or FTP/SFTP),
-//    into the same "api" folder as send-quote.php.
+// 2. Fill in your real Resend API key and the deploy webhook secret below.
+// 3. Upload ONLY config.local.php (and deploy.php, once) to Hostinger via
+//    File Manager or FTP/SFTP, into this same "api" folder.
 //
-// config.local.php is listed in .gitignore and excluded from the deploy
-// workflow, so it is never committed, never uploaded by GitHub Actions, and
-// never overwritten or deleted by future auto-deploys. That's what keeps
-// the real key private even though this repo may auto-deploy on every push.
+// config.local.php is listed in .gitignore, so it is never committed and
+// never overwritten by deploy.php when it pulls new code — that's what
+// keeps both secrets private even though the site auto-deploys on push.
 
 define('RESEND_API_KEY', 'your-resend-api-key-here');
+
+// Must match the "Secret" field you set on the GitHub webhook
+// (repo Settings -> Webhooks -> the hook pointing at api/deploy.php).
+define('DEPLOY_WEBHOOK_SECRET', 'your-webhook-secret-here');
+
+// A GitHub fine-grained Personal Access Token, scoped ONLY to this repo
+// with "Contents: Read-only" permission — lets deploy.php download the
+// latest code from this private repo. Create one at:
+// https://github.com/settings/personal-access-tokens/new
+define('GITHUB_DEPLOY_TOKEN', 'your-github-token-here');
