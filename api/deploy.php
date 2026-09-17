@@ -56,16 +56,10 @@ if ($ref !== 'refs/heads/main') {
     respond(200, ['ok' => true, 'message' => 'Ignored ref: ' . $ref]);
 }
 
-if (!defined('GITHUB_DEPLOY_TOKEN') || GITHUB_DEPLOY_TOKEN === '') {
-    error_log('deploy.php: GITHUB_DEPLOY_TOKEN is not configured');
-    respond(500, ['ok' => false, 'error' => 'Server misconfiguration']);
-}
-
 $repoOwner = 'mendelkats11';
 $repoName = 'window-washing-pros-saskatoon';
-// Authenticated zipball endpoint — works for private repos. The token only
-// needs read-only "Contents" access to this one repo.
-$zipUrl = "https://api.github.com/repos/{$repoOwner}/{$repoName}/zipball/main";
+// Public repo — plain archive download, no auth needed.
+$zipUrl = "https://github.com/{$repoOwner}/{$repoName}/archive/refs/heads/main.zip";
 
 if (!class_exists('ZipArchive')) {
     error_log('deploy.php: ZipArchive extension is not available');
@@ -82,10 +76,6 @@ curl_setopt_array($ch, [
     CURLOPT_FOLLOWLOCATION => true,
     CURLOPT_TIMEOUT => 30,
     CURLOPT_USERAGENT => 'window-washing-deploy-webhook',
-    CURLOPT_HTTPHEADER => [
-        'Authorization: Bearer ' . GITHUB_DEPLOY_TOKEN,
-        'Accept: application/vnd.github+json',
-    ],
 ]);
 $zipData = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

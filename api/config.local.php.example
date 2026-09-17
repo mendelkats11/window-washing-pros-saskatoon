@@ -15,9 +15,3 @@ define('RESEND_API_KEY', 'your-resend-api-key-here');
 // Must match the "Secret" field you set on the GitHub webhook
 // (repo Settings -> Webhooks -> the hook pointing at api/deploy.php).
 define('DEPLOY_WEBHOOK_SECRET', 'your-webhook-secret-here');
-
-// A GitHub fine-grained Personal Access Token, scoped ONLY to this repo
-// with "Contents: Read-only" permission — lets deploy.php download the
-// latest code from this private repo. Create one at:
-// https://github.com/settings/personal-access-tokens/new
-define('GITHUB_DEPLOY_TOKEN', 'your-github-token-here');
