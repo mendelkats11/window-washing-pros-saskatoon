@@ -1,0 +1,9 @@
+# Secrets — never commit these
+.env
+.env.local
+.env.*.local
+api/config.local.php
+
+# Misc
+node_modules
+.vercel

@@ -1,0 +1,14 @@
+<?php
+// SETUP (one-time, manual — do this directly on the Hostinger server):
+//
+// 1. Copy this file to "config.local.php" in this same folder.
+// 2. Replace the placeholder below with your real Resend API key.
+// 3. Upload ONLY config.local.php to Hostinger (File Manager or FTP/SFTP),
+//    into the same "api" folder as send-quote.php.
+//
+// config.local.php is listed in .gitignore and excluded from the deploy
+// workflow, so it is never committed, never uploaded by GitHub Actions, and
+// never overwritten or deleted by future auto-deploys. That's what keeps
+// the real key private even though this repo may auto-deploy on every push.
+
+define('RESEND_API_KEY', 'your-resend-api-key-here');

@@ -1,0 +1,34 @@
+name: Deploy to Hostinger
+
+# Runs on every push to main. Syncs the site's files to Hostinger over
+# FTPS — this is plain file hosting, not a Hostinger "web app"/Node slot,
+# so it doesn't count against that limit.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          server-dir: ${{ secrets.HOSTINGER_SERVER_DIR }}
+          protocol: ftps
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/.env*
+            api/config.local.php
+            api/config.local.php.example
+            README.md
